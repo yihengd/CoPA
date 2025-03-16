@@ -1,0 +1,4 @@
+numpy
+opencv-python
+open-clip-torch==2.27.0
+pandas
