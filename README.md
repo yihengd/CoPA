@@ -21,4 +21,14 @@ pip install torch==2.5.0 torchvision==0.20.0 torchaudio==2.5.0 --index-url https
 
 ### Data Preparation
 
-Download [PH2](https://www.fc.up.pt/addi/ph2 database.html), [Derm7pt](https://derm.cs.sfu.ca/Download.html), SkinCon
+Step1: Download [PH2](https://www.fc.up.pt/addi/ph2%20database.html), [Derm7pt](https://derm.cs.sfu.ca/Download.html), [SkinCon](https://skincon-dataset.github.io/) to `data` folder and split annotation files into training sets, validation sets, and test sets.
+
+Step2: Add text concept to `dataset/concept_label.py`
+
+### Train
+
+To train CoPA, use
+
+```shell
+sh train.sh
+```

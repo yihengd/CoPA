@@ -20,14 +20,14 @@ class PH2(Dataset):
         super().__init__()
         self.mode = mode
         self.basedir = dataset_dir
-        meta_path = os.path.join(self.basedir, 'annotations', self.mode + '_6.xlsx')
+        meta_path = os.path.join(self.basedir, self.mode + '.xlsx')
         self.meta = pd.read_excel(meta_path)
         self.transforms = transforms
         self.config = config
 
     def __getitem__(self, index):
-        img_path_meta = self.meta['img_name'].iloc[index]
-        img_path = os.path.join(self.basedir, 'images', img_path_meta, img_path_meta + '_Dermoscopic_Image', img_path_meta + '.bmp')
+        img_name = self.meta['img_name'].iloc[index]
+        img_path = os.path.join(self.basedir, 'images', img_name, img_name + '_Dermoscopic_Image', img_name + '.bmp')
         img = cv2.imread(img_path)
 
         if self.transforms:

@@ -6,7 +6,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch import optim
 from torchvision import transforms
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, WeightedRandomSampler
 from torch.utils.tensorboard import SummaryWriter
 
 import utils
@@ -79,14 +79,18 @@ def load_dataset(config, train_transforms, val_transforms):
                                              mode='train',
                                              transforms=train_transforms,
                                              config=config)
+    if config.dataset == 'PH2':
+        weights = [5 if label == 1 else 1.28 for _, label, _ in train_set]
+    sampler = WeightedRandomSampler(weights, num_samples=int(2 * len(weights)))
     train_loader = DataLoader(train_set,
                               batch_size=config.batch_size,
-                              shuffle=True,
+                              shuffle=False,
                               num_workers=14,
-                              drop_last=False)
+                              drop_last=False,
+                              sampler=sampler)
 
     val_set = dataset_dict[config.dataset](config.data_path,
-                                           mode='test',
+                                           mode='val',
                                            transforms=val_transforms,
                                            config=config)
     val_loader = DataLoader(val_set,
